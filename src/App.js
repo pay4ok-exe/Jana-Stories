@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Card from './components/Card';
 
 function App() {
@@ -45,6 +46,8 @@ function App() {
       {results.map((item, index) => (
         <Card key={index} item={item} />
       ))}
+
+      <Footer/>
     </div>
   );
 }
