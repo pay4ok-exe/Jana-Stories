@@ -2,9 +2,9 @@
 import React from 'react';
 import '../Card.css'; // Ensure you have appropriate styling in Card.css
 
-function Card({ item }) {
+function Card({ item, onClick }) {
     return (
-        <div className="card">
+        <div className="card" onClick={() => onClick(item)}>
             <img src={item.urlToImage} alt="Article image" />
             <div className="card-content">
                 <h2>{item.title}</h2>

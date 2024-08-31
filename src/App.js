@@ -1,11 +1,15 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Card from './components/Card';
+import Modal from './components/Modal';
 
 function App() {
   const [results, setResults] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     async function getTopStoriesFromApi() {
@@ -31,7 +35,6 @@ function App() {
     getTopStoriesFromApi();
   }, []);
 
-  // Function to shuffle an array
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -40,14 +43,37 @@ function App() {
     return array;
   }
 
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedItem(null);
+  };
+
   return (
     <div className="App">
       <Header />
       {results.map((item, index) => (
-        <Card key={index} item={item} />
+        <Card key={index} item={item} onClick={() => handleOpenModal(item)} />
       ))}
-
-      <Footer/>
+      <Footer />
+      <Modal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        content={{
+          title: selectedItem?.title,
+          image: selectedItem?.urlToImage,
+          text: selectedItem?.content,
+          publishedAt: selectedItem?.publishedAt,
+          author: selectedItem?.author,
+          section: selectedItem?.section,
+          sourceName: selectedItem?.source.name,
+          url: selectedItem?.url // Add URL to content
+        }}
+      />
     </div>
   );
 }
