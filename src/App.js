@@ -1,41 +1,33 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Card from './components/Card';
+import Modal from './components/Modal';
 
 function App() {
   const [results, setResults] = useState([]);
-  const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     async function getTopStoriesFromApi() {
       const API_KEY = '529f1534590c456f89f2e452677867d4';
       try {
         const response = await fetch(`https://newsapi.org/v2/everything?q=technology&from=2024-08-30&to=2024-08-30&sortBy=popularity&apiKey=${API_KEY}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
         const resJson = await response.json();
 
-        // Check if articles exist in the response
-        if (resJson.articles && Array.isArray(resJson.articles)) {
-          // Randomize the order of the articles
-          const randomizedArticles = shuffleArray(resJson.articles);
+        // Randomize the order of the articles
+        const randomizedArticles = shuffleArray(resJson.articles);
 
-          // Filter only articles that have an image and take the top 10
-          const articlesWithImages = randomizedArticles.filter(article => article.urlToImage).slice(0, 10);
+        // Filter only articles that have an image and take the top 10
+        const articlesWithImages = randomizedArticles.filter(article => article.urlToImage).slice(0, 10);
 
-          // Update state
-          setResults(articlesWithImages);
-        } else {
-          setError('No articles found.');
-        }
+        // Update state
+        setResults(articlesWithImages);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError(error.message);
       }
     }
 
@@ -43,7 +35,6 @@ function App() {
     getTopStoriesFromApi();
   }, []);
 
-  // Function to shuffle an array
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -52,14 +43,36 @@ function App() {
     return array;
   }
 
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedItem(null);
+  };
+
   return (
     <div className="App">
       <Header />
-      {error && <div className="error">{error}</div>}
       {results.map((item, index) => (
-        <Card key={index} item={item} />
+        <Card key={index} item={item} onClick={() => handleOpenModal(item)} />
       ))}
       <Footer />
+      <Modal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        content={{
+          title: selectedItem?.title,
+          image: selectedItem?.urlToImage,
+          text: selectedItem?.content,
+          publishedAt: selectedItem?.publishedAt,
+          author: selectedItem?.author,
+          section: selectedItem?.section,
+          sourceName: selectedItem?.source.name
+        }}
+      />
     </div>
   );
 }
