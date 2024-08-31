@@ -3,9 +3,9 @@
 ## Installation
 
 1. **Clone the Repository:**
-   \`\`\`bash
+   \\\bash
    git clone https://github.com/your-username/jana-stories.git
-   \`\`\`
+   \\\
 
 2. **Navigate into the Project Directory:**
    \`\`\`bash
