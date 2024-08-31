@@ -1,6 +1,6 @@
 // src/components/Card.js
 import React from 'react';
-import '../Card.css'; // Ensure you have appropriate styling in Card.css
+import '../assets/styles/Card.css';
 
 function Card({ item, onClick }) {
     return (
