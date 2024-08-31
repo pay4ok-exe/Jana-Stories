@@ -3,24 +3,24 @@
 ## Installation
 
 1. **Clone the Repository:**
-   \\\bash
+   ```bash
    git clone https://github.com/your-username/jana-stories.git
-   \\\
+   ```
 
 2. **Navigate into the Project Directory:**
-   \`\`\`bash
+   ```bash
    cd jana-stories
-   \`\`\`
+   ```
 
 3. **Install Dependencies:**
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 4. **Start the Development Server:**
-   \`\`\`bash
+   ```bash
    npm start
-   \`\`\`
+   ```
 
    The application will be running on [http://localhost:3000](http://localhost:3000).
 
