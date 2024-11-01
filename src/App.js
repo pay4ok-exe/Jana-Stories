@@ -14,8 +14,6 @@ function App() {
   useEffect(() => {
     async function getTopStoriesFromApi() {
       const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-      // console.log(API_KEY);
-      // const API_KEY = "529f1534590c456f89f2e452677867d4";
       try {
         // const response = await fetch(`https://newsapi.org/v2/everything?q=technology&from=2024-08-30&to=2024-08-30&sortBy=popularity&apiKey=${API_KEY}`);
         const response = await fetch(
@@ -47,7 +45,6 @@ function App() {
 
     // Call the function to fetch the data
     getTopStoriesFromApi();
-    console.log("API Key:", process.env.REACT_APP_NEWS_API_KEY);
   }, []);
 
   function shuffleArray(array) {
