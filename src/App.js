@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Card from "./components/Card";
 import Modal from "./components/Modal";
+import datas from "./datas.json";
 
 function App() {
   const [results, setResults] = useState([]);
@@ -12,39 +13,29 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    async function getTopStoriesFromApi() {
-      const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-      try {
-        // const response = await fetch(`https://newsapi.org/v2/everything?q=technology&from=2024-08-30&to=2024-08-30&sortBy=popularity&apiKey=${API_KEY}`);
-        const response = await fetch(
-          `https://newsapi.org/v2/everything?q=technology&from=2024-10-01&to=2024-10-31&sortBy=popularity&apiKey=${API_KEY}`
-        );
-        const resJson = await response.json();
+    // Function to process data from the local JSON file
+    function getTopStoriesFromLocalData() {
+      // Access articles from JSON and shuffle
+      const articles = datas.articles;
+      const randomizedArticles = shuffleArray(articles);
 
-        // Randomize the order of the articles
-        const randomizedArticles = shuffleArray(resJson.articles);
+      // Filter only articles that have an image and take the top 15
+      const articlesWithImages = randomizedArticles
+        .filter(
+          (article) =>
+            article.urlToImage &&
+            article.title &&
+            article.description &&
+            article.content
+        )
+        .slice(0, 15);
 
-        // Filter only articles that have an image and take the top 10
-        const articlesWithImages = randomizedArticles
-          .filter(
-            (article) =>
-              article.urlToImage &&
-              article.title &&
-              article.description &&
-              article.content
-          )
-          .slice(0, 15);
-
-        // Update state
-        setResults(articlesWithImages);
-        // console.log(articlesWithImages);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      // Update the state with filtered articles
+      setResults(articlesWithImages);
     }
 
-    // Call the function to fetch the data
-    getTopStoriesFromApi();
+    // Call the function to process data
+    getTopStoriesFromLocalData();
   }, []);
 
   function shuffleArray(array) {
