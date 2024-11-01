@@ -4,7 +4,7 @@ import "../assets/styles/Modal.css";
 
 function Modal({ isOpen, onClose, content }) {
   if (!isOpen) return null;
-  console.log(content);
+  // console.log(content);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -13,11 +13,7 @@ function Modal({ isOpen, onClose, content }) {
           ×
         </button>
         <div className="modal-content">
-          <img
-            src={content.urlToImage}
-            alt="Article image"
-            className="modal-img"
-          />
+          <img src={content.urlToImage} alt="Article" className="modal-img" />
           <div className="modal-details">
             <h2 className="modal-title">{content.title}</h2>
             <p className="modal-text">{content.content}</p>

@@ -5,7 +5,7 @@ import "../assets/styles/Card.css";
 function Card({ item, onClick }) {
   return (
     <div className="card" onClick={() => onClick(item)}>
-      <img src={item.urlToImage} alt="Article image" />
+      <img src={item.urlToImage} alt="Article" />
       <div className="card-content">
         <h2>{item.title}</h2>
         <p>{item.content}</p>
