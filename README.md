@@ -4,7 +4,7 @@
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/jana-stories.git
+   git clone https://github.com/pay4ok-exe/Jana-Stories.git
    ```
 
 2. **Navigate into the Project Directory:**
